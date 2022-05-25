@@ -1,43 +1,62 @@
 {
   "pages": [{
-    "path": "pages/home/home",
-    "style": {
-      "navigationBarTitleText": "",
-      "enablePullDownRefresh": false
+      "path": "pages/home/home",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/cate/cate",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/cart/cart",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/my/my",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
     }
+  ],
 
-  }, {
-    "path": "pages/cate/cate",
-    "style": {
-      "navigationBarTitleText": "",
-      "enablePullDownRefresh": false
-    }
-
-  }, {
-    "path": "pages/cart/cart",
-    "style": {
-      "navigationBarTitleText": "",
-      "enablePullDownRefresh": false
-    }
-
-  }, {
-    "path": "pages/my/my",
-    "style": {
-      "navigationBarTitleText": "",
-      "enablePullDownRefresh": false
-    }
-
+  "subPackages": [{
+    "root": "subpkg",
+    "pages": [{
+      "path": "goods_detail/goods_detail",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, 
+    {
+      "path": "goods_list/goods_list",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }]
   }],
+
   "globalStyle": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "优购",
+    "navigationBarTitleText": "零食购",
     "navigationBarBackgroundColor": "#C00000",
     "backgroundColor": "#F8F8F8",
     "app-plus": {
       "background": "#efeff4"
     }
   },
-  
+
   "tabBar": {
     "selectedColor": "#C00000",
     "list": [{
