@@ -1,5 +1,9 @@
 <template>
   <view>
+    <!-- 使用自定义的搜索组件 -->
+    <!-- <my-search :bgcolor="'pink'" :radius="5"></my-search> -->
+    <my-search @click="gotoSearch"/>
+    
     <view class="scroll-view-container">
       <!-- 左侧的滚动视图区域 -->
        <scroll-view class="left-scroll-view" scroll-y="true" :style="{height: wh + 'px'}">
@@ -48,7 +52,7 @@
     onLoad() {
       const sysInfo = uni.getSystemInfoSync()
       // 为 wh 窗口可用高度动态赋值
-      this.wh = sysInfo.windowHeight
+      this.wh = sysInfo.windowHeight - 50
       // 调用获取分类列表数据的方法
       this.getCateList()
     },
@@ -73,6 +77,13 @@
         uni.navigateTo({
           url: '/subpkg/goods_list/goods_list?cid=' + item3.cat_id
         })
+      },
+      
+      // 跳转到分包中的搜索页面
+      gotoSearch() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
+        })
       }
     }
   }
@@ -96,9 +107,7 @@
         
         // 激活项的样式
         &.active {
-          background-color: #FFF;
           position: relative;
-          
           // 渲染激活项左侧的红色指示边线
           &::before {
             content: ' ';
