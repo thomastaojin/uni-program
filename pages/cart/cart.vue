@@ -11,7 +11,7 @@
     <!-- 商品列表区域 -->
     <block v-for="(goods, i) in cart" :key="i">
       <!-- 在 radioChangeHandler 事件处理函数中，通过事件对象 e，得到商品的 goods_id 和 goods_state -->
-      <my-goods :goods="goods" :show-radio="true" @radio-change="radioChangeHandler"></my-goods>
+      <my-goods :goods="goods" :show-radio="true" :show-num="true" @radio-change="radioChangeHandler" @num-change="numberChangeHandler"></my-goods>
     </block>
   </view>
 </template>
@@ -35,11 +35,15 @@
     },
     
     methods: {
-      ...mapMutations('m_cart', ['updateGoodsState']),
+      ...mapMutations('m_cart', ['updateGoodsState', 'updateGoodsCount']),
       // 商品的勾选状态发生了变化
       radioChangeHandler(e) {
         this.updateGoodsState(e)
-      }
+      },
+      // 商品的数量发生了变化
+      numberChangeHandler(e) {
+        this.updateGoodsCount(e)
+      },
     },
   }
 </script>
@@ -55,6 +59,7 @@
     
     .cart-title-text {
       margin-left: 10px;
+      font-size: 16px;
     }
   }
 </style>

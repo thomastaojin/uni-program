@@ -37,17 +37,29 @@ export default {
     // 更新购物车中商品的勾选状态
     updateGoodsState(state, goods) {
       // 根据 goods_id 查询购物车中对应商品的信息对象
-      const findResul = state.cart.find(x => x.goods_id === goods.goods_id)
+      const findResult = state.cart.find(x => x.goods_id === goods.goods_id)
       
       // 有对应的商品信息对象
-      if (findResul) {
+      if (findResult) {
         // 更新对应商品的勾选状态
-        findResul.goods_state = goods.goods_state
+        findResult.goods_state = goods.goods_state
         // 持久化存储到本地
         this.commit('m_cart/saveToStorage')
       }
     },
     
+    // 更新购物车中商品的数量
+    updateGoodsCount(state, goods) {
+      // 根据 goods_id 查询购物车中对应商品的信息对象
+      const findResult = state.cart.find(x => x.goods_id === goods.goods_id)
+      
+      if (findResult) {
+        // 更新对应商品的数量
+        findResult.goods_count = goods.goods_count
+        // 持久化存储到本地
+        this.commit('m_cart/saveToStorage')
+      }
+    },
   },
   
   // 模块的 getters 属性

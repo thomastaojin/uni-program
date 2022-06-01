@@ -12,6 +12,8 @@
       <view class="goods-info-box">
         <!-- 商品价格 -->
         <view class="goods-price">￥{{goods.goods_price | tofixed}}</view>
+        <!-- 商品数量 -->
+        <uni-number-box :min="1" :value="goods.goods_count" v-if="showNum" @change="numChangeHandler"></uni-number-box>
       </view>
     </view>
   </view>
@@ -33,7 +35,12 @@
         type: Boolean,
         // 如果外界没有指定 show-radio 属性的值，则默认不展示 radio 组件
         default: false,
-      }
+      },
+      // 是否展示价格右侧的 NumberBox 组件
+      showNum: {
+        type: Boolean,
+        default: false
+      },
     },
     
     // 过滤器
@@ -61,7 +68,17 @@
           // 商品最新的勾选状态
           goods_state: !this.goods.goods_state
         })
-      }
+      },
+      
+      // NumberBox 组件的 change 事件处理函数
+      numChangeHandler(val) {
+        this.$emit('num-change', {
+          // 商品的 Id
+          goods_id: this.goods.goods_id,
+          // 商品的最新数量
+          goods_count: +val
+        })
+      },
     }
   }
 </script>
@@ -88,6 +105,7 @@
     
     .goods-item-right {
       display: flex;
+      flex: 1;
       flex-direction: column;
       justify-content: space-between;
   
@@ -95,9 +113,15 @@
         font-size: 13px;
       }
       
-      .goods-price {
-        font-size: 16px;
-        color: #c00000;
+      .goods-info-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        .goods-price {
+          font-size: 16px;
+          color: #c00000;
+        }
       }
     }
   }
