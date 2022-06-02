@@ -1,7 +1,7 @@
 export default {
   // 为当前模块开启命名空间
   namespaced: true,
-  
+
   // 模块的 state 数据
   state: () => ({
     // 购物车的数组，用来存储购物车中每个商品的信息对象
@@ -60,6 +60,13 @@ export default {
         this.commit('m_cart/saveToStorage')
       }
     },
+    
+    // 根据 Id 从购物车中删除对应的商品信息
+    removeGoodsById(state, goods_id) {
+      // 调用数组的 filter 方法进行过滤
+      state.cart = state.cart.filter(x => x.goods_id !== goods_id)
+      this.commit('m_cart/saveToStorage')
+    }
   },
   
   // 模块的 getters 属性

@@ -10,6 +10,14 @@ export default {
     // 在页面刚展示的时候，设置数字徽标
     this.setBadge()
   },
+  watch: {
+    total: {
+      handler(newVal) {
+        this.setBadge()
+      },
+      immediate: true
+    }
+  },
   
   methods: {
     // 调用 uni.setTabBarBadge() 方法，为购物车设置右上角的徽标
