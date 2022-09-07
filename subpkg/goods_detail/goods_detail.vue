@@ -67,7 +67,7 @@
       }, */
       
       // 定义 total 侦听器，指向一个配置对象
-      total : {
+      total: {
         // handler 属性用来定义侦听器的 function 处理函数
         handler(newVal) {
           const findResult = this.options.find(x => x.text === '购物车')

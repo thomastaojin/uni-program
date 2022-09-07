@@ -5,7 +5,6 @@
       <my-search @click="gotoSearch"/>
     </view>
     
-    
     <!-- 轮播图区域 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <!-- 循环渲染轮播图的 item 项 -->
@@ -16,7 +15,7 @@
         </navigator>
       </swiper-item>
     </swiper>
-
+    
     <!-- 分类导航区域 -->
     <view class="nav-list">
       <view class="nav-item" v-for="(item, i) in navList" :key="i" @click="navClickHandler(item)">
@@ -66,17 +65,65 @@
     },
     onLoad() {
       // 2. 在小程序页面刚加载的时候，调用获取轮播图数据的方法
+      // this.getTotalData()
       this.getSwiperList(),
-        this.getNavList(),
-        this.getFloorList()
+      this.getNavList(),
+      this.getFloorList()
     },
     methods: {
       // 3. 获取轮播图数据的方法
+      getTotalData() {
+        let swiperList = new Promise((resolve, reject) => {
+          uni.$http.get('/api/public/v1/home/swiperdata').then(res => {
+            const { data: swiperListData } = res
+            resolve(swiperListData)
+          }).catch(() => {
+            reject()
+          })
+          
+        })
+        
+        let navList = new Promise((reslove, reject) => {
+          uni.$http.get('/api/public/v1/home/catitems').then(res => {
+            const { data: navListData } = res
+            resolve(navListData)
+          }).catch(() => {
+            reject()
+          })
+        })
+        
+        let floorList = new Promise((reslove, reject) => {
+          uni.$http.get('/api/public/v1/home/floordata').then(res => {
+            const { data: floorListData } = res
+            reslove(floorListData)
+          }).catch(() => {
+            reject()
+          })
+        })
+      
+        Promise.all([swiperList, navList, floorList]).then(values => {
+          [swiperListData, navListData, floorListData] = [values[0], values[1], values[2]]
+          this.swiperList = swiperListData.message
+          this.navList = navListData.message
+          // 通过双层 forEach 循环，处理 URL 地址
+          floorListData.message.forEach(floor => {
+            floor.product_list.forEach(prod => {
+              prod.url = '/subpkg/goods_list/goods_list?' + prod.navigator_url.split('?')[1]
+            })
+          })
+          this.floorList = floorListData.message
+          
+          uni.$showMsg('数据请求成功！')
+        }).catch(()=> {
+          uni.$showMsg()
+        })
+        
+      },
+      
       async getSwiperList() {
         // 3.1 发起请求(异步函数，请求返回promise，解构赋值)
-        const {
-          data: res
-        } = await uni.$http.get('/api/public/v1/home/swiperdata')
+        const { data: res }  = await uni.$http.get('/api/public/v1/home/swiperdata')
+        console.log(res);
         // 3.2 请求失败
         if (res.meta.status !== 200) return uni.$showMsg()
         // 3.3 请求成功，为 data 中的数据赋值
@@ -85,9 +132,7 @@
       },
       
       async getNavList() {
-        const {
-          data: res
-        } = await uni.$http.get('/api/public/v1/home/catitems')
+        const { data: res } = await uni.$http.get('/api/public/v1/home/catitems')
         if (res.meta.status !== 200) return uni.$showMsg()
         this.navList = res.message
       },

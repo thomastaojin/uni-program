@@ -54,7 +54,7 @@
         clearTimeout(this.timer)
         this.timer = setTimeout(() => {
           // 如果 500 毫秒内，没有触发新的输入事件，则为搜索关键词赋值
-          // console.log(e);
+          // console.log(e); e拿到用户输入的内容
           this.kw = e,
           this.getSearchList()
         }, 500)
@@ -74,7 +74,6 @@
         
         // 查询到搜索建议之后，调用 saveSearchHistory() 方法保存搜索关键词
         this.saveSearchHistory()
-        
       },
       
       gotoDetail(item) {

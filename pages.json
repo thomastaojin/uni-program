@@ -29,6 +29,15 @@
     }
   ],
 
+  "preloadRule": {
+    "pages/home/home": {
+      "packages": [
+        "subpkg"
+      ],
+      "network": "all"
+    }
+  },
+
   "subPackages": [{
     "root": "subpkg",
     "pages": [{
